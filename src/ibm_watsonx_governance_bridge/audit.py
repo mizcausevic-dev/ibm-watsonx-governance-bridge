@@ -54,8 +54,10 @@ def emit_audit_event(
     }
 
     try:
-        response = client.post(url, json=event, timeout=2.0) if client is not None else httpx.post(
-            url, json=event, timeout=2.0
+        response = (
+            client.post(url, json=event, timeout=2.0)
+            if client is not None
+            else httpx.post(url, json=event, timeout=2.0)
         )
         if response.status_code >= 400:
             logger.warning("audit-stream POST returned HTTP %s", response.status_code)
