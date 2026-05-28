@@ -1,0 +1,30 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: ibm-watsonx-governance-bridge
+spec:
+  template:
+    spec:
+      containerConcurrency: 20
+      timeoutSeconds: 60
+      containers:
+        - image: us.icr.io/replace-me/ibm-watsonx-governance-bridge:latest
+          env:
+            - name: PORT
+              value: "8080"
+            - name: WATSONX_BASE_URL
+              value: "https://us-south.ml.cloud.ibm.com"
+            - name: WATSONX_VERSION
+              value: "2024-10-10"
+            - name: DEFAULT_OUTCOME
+              value: "deny"
+            - name: IBM_CLOUD_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ibm-cloud-api-key
+                  key: api-key
+            - name: POLICY_BUNDLES_JSON
+              valueFrom:
+                secretKeyRef:
+                  name: policy-bundles
+                  key: bundles.json

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Docs · IBM watsonx Governance Bridge</title>
+  <meta name="description" content="Docs for IBM watsonx Governance Bridge routes, environment variables, and deployment pattern.">
+  <link rel="canonical" href="https://watsonx.kineticgain.com/docs/">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <main class="wrap">
+    <div class="topbar">Docs · IBM watsonx Governance Bridge</div>
+    <section class="panel">
+      <h2>Routes</h2>
+      <ul>
+        <li><code>POST /api/governed/models/{model_id}/text/chat</code></li>
+        <li><code>POST /api/governed/models/{model_id}/text/generation</code></li>
+        <li><code>POST /api/governed/deployments/{deployment_id}/text/chat</code></li>
+        <li><code>POST /api/governed/deployments/{deployment_id}/text/generation</code></li>
+        <li><code>GET /api/healthz</code></li>
+      </ul>
+    </section>
+    <section class="panel">
+      <h2>Required configuration</h2>
+      <ul>
+        <li><code>WATSONX_BASE_URL</code></li>
+        <li><code>WATSONX_VERSION</code></li>
+        <li><code>IBM_CLOUD_IAM_TOKEN</code> or <code>IBM_CLOUD_API_KEY</code></li>
+        <li><code>POLICY_BUNDLES_JSON</code></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

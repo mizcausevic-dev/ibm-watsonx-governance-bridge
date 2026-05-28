@@ -1,0 +1,54 @@
+{
+  "bundle_id": "enterprise-watsonx-prod-2026",
+  "decision_card_url": "https://enterprise.example/.well-known/decisions/DEC-200.json",
+  "rules": [
+    {
+      "id": "deny-prod-destructive-tools",
+      "priority": 100,
+      "effect": "deny",
+      "tool_name": "^tool\\..*(delete|purge|drop).*",
+      "when": {
+        "expr": "context.get('environment') == 'production'"
+      },
+      "because": {
+        "decision_card": "https://enterprise.example/.well-known/decisions/DEC-200.json",
+        "condition_id": "no-destructive-actions-in-production"
+      }
+    },
+    {
+      "id": "approval-required-for-sensitive-models",
+      "priority": 90,
+      "effect": "require_approval",
+      "tool_name": "^watsonx\\.model\\.(meta-llama/llama-3-3-70b-instruct|ibm/granite-13b-chat-v2)$",
+      "caller_id": "^untrusted-.*"
+    },
+    {
+      "id": "allow-approved-foundation-models",
+      "priority": 20,
+      "effect": "allow",
+      "tool_name": "^watsonx\\.model\\.(ibm/granite-3-8b-instruct|ibm/granite-13b-instruct-v2)$",
+      "caller_id": ".*"
+    },
+    {
+      "id": "allow-governed-deployments",
+      "priority": 15,
+      "effect": "allow",
+      "tool_name": "^watsonx\\.deployment\\..*",
+      "caller_id": ".*"
+    },
+    {
+      "id": "allow-watsonx-operations",
+      "priority": 12,
+      "effect": "allow",
+      "tool_name": "^watsonx\\.operation\\..*",
+      "caller_id": ".*"
+    },
+    {
+      "id": "allow-tools-baseline",
+      "priority": 10,
+      "effect": "allow",
+      "tool_name": "^tool\\..*",
+      "caller_id": ".*"
+    }
+  ]
+}

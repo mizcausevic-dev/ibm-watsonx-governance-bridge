@@ -1,0 +1,13 @@
+{
+  "Values": {
+    "WATSONX_BASE_URL": "https://us-south.ml.cloud.ibm.com",
+    "WATSONX_VERSION": "2024-10-10",
+    "IBM_CLOUD_API_KEY": "<your-ibm-cloud-api-key>",
+    "IBM_CLOUD_IAM_URL": "https://iam.cloud.ibm.com/identity/token",
+    "POLICY_BUNDLES_JSON": "[]",
+    "AUDIT_STREAM_URL": "",
+    "DEFAULT_OUTCOME": "deny",
+    "WATSONX_PROJECT_ID": "<optional-default-project-id>",
+    "WATSONX_SPACE_ID": "<optional-default-space-id>"
+  }
+}

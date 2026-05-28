@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verification · IBM watsonx Governance Bridge</title>
+  <meta name="description" content="Verification details for IBM watsonx Governance Bridge.">
+  <link rel="canonical" href="https://watsonx.kineticgain.com/verification/">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <main class="wrap">
+    <div class="topbar">Verification · IBM watsonx Governance Bridge</div>
+    <section class="panel">
+      <h2>Verified locally</h2>
+      <ul>
+        <li><code>pytest -v</code> for policy evaluation and HTTP contract tests</li>
+        <li><code>ruff check src tests function_app.py</code></li>
+        <li><code>mypy src</code></li>
+      </ul>
+      <p>The bridge keeps <code>x-kg-caller-id</code> and <code>x-kg-environment</code> conventions, returns <code>x-kg-correlation-id</code>, and uses IBM Cloud IAM bearer auth for upstream forwarding.</p>
+    </section>
+  </main>
+</body>
+</html>
