@@ -18,6 +18,15 @@ The bridge evaluates the call against deny-trumps-allow `PolicyBundle`s, and:
 
 Every decision emits a `tool_invocation_*` event to `audit-stream-py`, so the watsonx path writes to the same tamper-evident spine as the rest of the Kinetic Gain portfolio.
 
+## Production status
+
+| Aspect | Status |
+|--------|--------|
+| Deploy | Docs surface live at **https://watsonx.kineticgain.com/**; Code Engine deployment manifest in `infra/` |
+| Hardening | `v1.0-prod` — CI (pytest, ruff, mypy) green on main; Pages workflow green; v0.1-shipped operator-surface preserved |
+| Data posture | Synthetic Decision Cards, synthetic PolicyBundles, no IBM Cloud IAM credentials in repo; `local.settings.json` git-ignored |
+| Governance language | Frames as readiness/evidence/posture per `feedback_compliance_public_language`; never "compliant" or "certified" |
+
 ## Why this exists
 
 IBM and watsonx buyers need the same runtime governance primitive we already proved for Azure OpenAI and MCP: a Decision Card should not stop at review time. It should enforce at request time. This bridge brings that pattern to watsonx.ai with IBM Cloud IAM auth, model/deployment-aware routing, and correlation-id traceability.
@@ -113,3 +122,7 @@ The code is shaped for IBM Code Engine or any HTTP container runtime. Keep the b
 ## License
 
 AGPL-3.0-or-later.
+
+## Part of the Kinetic Gain Suite
+
+Operator surface in the [Kinetic Gain Suite](https://suite.kineticgain.com/) — a portfolio of buyer-readable control planes spanning security posture, compliance evidence, data-platform governance, FinOps, and operator workflows. See the suite index for related surfaces. Apex: [kineticgain.com](https://kineticgain.com/).
