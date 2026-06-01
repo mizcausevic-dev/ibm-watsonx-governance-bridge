@@ -1,0 +1,58 @@
+name: OpenSSF Scorecard
+
+# Automated security posture scoring against the OpenSSF Scorecard ruleset:
+#   https://github.com/ossf/scorecard
+#
+# Score appears in the Security tab + can be embedded as a badge.
+# Catches regressions in: dangerous workflows, missing branch protection,
+# unpinned actions, weak deps, exposed secrets, missing license, etc.
+#
+# Triggers:
+#   - branch_protection_rule (fires when branch protection config changes)
+#   - Weekly Saturday cron (keeps the score fresh as new checks ship)
+#   - Push to main (catches just-shipped regressions)
+
+on:
+  branch_protection_rule:
+  schedule:
+    - cron: "0 13 * * 6"
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write
+  id-token: write
+  actions: read
+
+jobs:
+  analysis:
+    name: Scorecard analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout (full history needed by Scorecard)
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          persist-credentials: false
+
+      - name: Run Scorecard
+        uses: ossf/scorecard-action@13ec8c77e8a5dae7e0a0d47bde3e3004df15d34f  # v2
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          # publish_results: true sends the score to the public Scorecard
+          # API so it appears at securityscorecards.dev/viewer/?uri=...
+          publish_results: true
+
+      - name: Upload SARIF (so Security tab shows findings)
+        uses: github/codeql-action/upload-sarif@03e4368ac7daa2bd82b3e85262f3bf87ee112f57  # v3
+        with:
+          sarif_file: results.sarif
+
+      - name: Upload artifact (raw JSON downloadable from the run)
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
+        with:
+          name: SARIF file
+          path: results.sarif
+          retention-days: 30
