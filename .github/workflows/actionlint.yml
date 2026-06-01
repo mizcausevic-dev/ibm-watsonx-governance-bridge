@@ -1,0 +1,42 @@
+name: actionlint
+
+# Static analysis for GitHub Actions workflows.
+# Catches: workflow syntax errors, deprecated triggers, invalid expressions,
+# shellcheck issues on `run:` steps, dangerous shell patterns, missing job
+# dependencies. Runs only when workflow files actually change.
+#
+# Single-file install — no Action SHA-pinning needed because we download
+# the official actionlint binary via the published install-script and
+# checksum-verify it. Updating to a newer actionlint version is a
+# one-line script edit, not a Dependabot PR.
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+      - ".github/actionlint.yaml"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/**"
+      - ".github/actionlint.yaml"
+
+permissions:
+  contents: read
+
+jobs:
+  actionlint:
+    name: Lint workflows
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+
+      - name: Download actionlint
+        id: get_actionlint
+        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+        shell: bash
+
+      - name: Run actionlint
+        run: ${{ steps.get_actionlint.outputs.executable }} -color
+        shell: bash
